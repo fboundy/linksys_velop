@@ -115,6 +115,7 @@ def get_generic_adapter_info_for_node_or_device(
                     adapter_info, "rssi_dbm_timestamp"
                 ),
                 "signal_strength": signal_strength.lower() if signal_strength else None,
+                "snr_db": get_adapter_info_by_key(adapter_info, "snr_db"),
             }
         )
 
