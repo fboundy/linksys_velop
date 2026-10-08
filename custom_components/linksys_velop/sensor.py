@@ -112,6 +112,7 @@ def get_generic_adapter_info_for_node_or_device(
                 "band": get_adapter_info_by_key(adapter_info, "band"),
                 "rssi_dbm": get_adapter_info_by_key(adapter_info, "rssi_dbm"),
                 "signal_strength": signal_strength.lower() if signal_strength else None,
+                "snr_db": get_adapter_info_by_key(adapter_info, "snr_db"),
             }
         )
 
