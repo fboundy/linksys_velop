@@ -16,7 +16,7 @@
     "pyvelop"
   ],
   "requirements": [
-    "pyvelop @ git+https://github.com/fboundy/pyvelop.git@74729fefdcac7d6bc7042fe667e452b2a9ea05fb"
+    "pyvelop @ git+https://github.com/fboundy/pyvelop.git@68e5bdcc55c16ff6a46f860f983c949e9759afc1"
   ],
   "ssdp": [
     {
