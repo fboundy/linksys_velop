@@ -189,6 +189,16 @@ def get_node_backhaul_info(node: NodeEntity, key: str) -> Any:
     return ret
 
 
+def get_node_adapter_attributes(node: NodeEntity) -> dict[str, Any]:
+    """Get the node's own IP and MAC (primary adapter) for the connected devices extra attributes."""
+
+    adapters: list[NodeAdapterInfo] = list(node.adapter_info.value or [])
+    adi: NodeAdapterInfo | None = next((a for a in adapters if a.primary), None) or next(iter(adapters), None)
+    if adi is None:
+        return {}
+    return {"node_ip": adi.ip, "node_mac": adi.mac}
+
+
 def get_node_devices(node: NodeEntity) -> list[dict[str, Any]]:
     """Get the details needed for the connected devices extra attributes.
 
@@ -346,8 +356,11 @@ ENTITIES: Mapping[str, tuple[LinksysVelopSensorEntityDescription, ...]] = (
                 LinksysVelopSensorEntityDescription(
                     entity_category=EntityCategory.DIAGNOSTIC,
                     esa_fn=lambda node: (
-                        {"devices": get_node_devices(node)}
-                        if isinstance(node, NodeEntity) and len(node.connected_devices)
+                        {
+                            **get_node_adapter_attributes(node),
+                            **({"devices": get_node_devices(node)} if len(node.connected_devices) else {}),
+                        }
+                        if isinstance(node, NodeEntity)
                         else {}
                     ),
                     key="",
